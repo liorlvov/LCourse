@@ -3,6 +3,7 @@ import CourseNav from '@/components/CourseNav';
 import BuyButton from '@/components/BuyButton';
 import HashOpener from '@/components/HashOpener';
 import { getViewer } from '@/lib/access';
+import SiteFooter from '@/components/SiteFooter';
 
 export const dynamic = 'force-dynamic';
 
@@ -22,7 +23,7 @@ export default async function CourseLayout({ children }: { children: React.React
           </form>
         </div>
       </div>
-      <main className="course">{children}</main>
+      <main className="course">{children}<SiteFooter /></main>
       <HashOpener />
     </>
   );

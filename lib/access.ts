@@ -1,5 +1,6 @@
 import 'server-only';
 import { createClient } from '@/lib/supabase/server';
+import { accessOpen } from '@/lib/legal';
 
 export type Viewer = {
   userId: string | null;
@@ -20,7 +21,7 @@ export async function getViewer(): Promise<Viewer> {
   return {
     userId: user.id,
     email: user.email ?? null,
-    hasAccess: Boolean(profile?.has_access),
+    hasAccess: Boolean(profile?.has_access) && accessOpen(),
     done: new Set((progress ?? []).map((r: { item_id: string }) => r.item_id)),
   };
 }

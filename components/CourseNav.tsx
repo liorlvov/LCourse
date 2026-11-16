@@ -1,14 +1,15 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { IconMap, IconConcept, IconTheorem, IconTool, IconExercise, IconCheat } from './Icons';
 
 const TABS = [
-  { slug: 'map', label: 'מפה' },
-  { slug: 'concepts', label: 'קונספטים' },
-  { slug: 'theorems', label: 'משפטים והוכחות' },
-  { slug: 'tools', label: 'כלים ודרכי פתרון' },
-  { slug: 'exercises', label: 'תרגילים' },
-  { slug: 'cheat', label: 'מה לזכור בתכלס' },
+  { slug: 'map', label: 'מפה', Icon: IconMap },
+  { slug: 'concepts', label: 'קונספטים', Icon: IconConcept },
+  { slug: 'theorems', label: 'משפטים והוכחות', Icon: IconTheorem },
+  { slug: 'tools', label: 'כלים ודרכי פתרון', Icon: IconTool },
+  { slug: 'exercises', label: 'תרגילים', Icon: IconExercise },
+  { slug: 'cheat', label: 'מה לזכור בתכלס', Icon: IconCheat },
 ];
 
 export default function CourseNav() {
@@ -16,8 +17,9 @@ export default function CourseNav() {
   return (
     <nav className="tabs" aria-label="לשוניות">
       {TABS.map((t) => (
-        <Link key={t.slug} href={`/course/${t.slug}`} className={path === `/course/${t.slug}` ? 'active' : undefined}>
-          {t.label}
+        <Link key={t.slug} href={`/course/${t.slug}`} className={`tab-${t.slug}${path === `/course/${t.slug}` ? ' active' : ''}`}>
+          <t.Icon size={17} />
+          <span>{t.label}</span>
         </Link>
       ))}
     </nav>

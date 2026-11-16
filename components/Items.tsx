@@ -1,12 +1,14 @@
 import { CAT_LABEL, type Card, type Exercise } from '@/lib/content';
 import MarkButton from './MarkButton';
 import BuyButton from './BuyButton';
+import { CAT_ICON, IconExercise, IconLock } from './Icons';
 
 export function CardView({ card, done }: { card: Card; done: boolean }) {
+  const Icon = CAT_ICON[card.cat as keyof typeof CAT_ICON] ?? IconExercise;
   return (
     <details className={`card cat-${card.cat}${done ? ' done' : ''}`} id={card.id}>
       <summary>
-        <span className={`badge b-${card.cat}`}>{CAT_LABEL[card.cat]}</span>
+        <span className={`badge b-${card.cat}`}><Icon size={14} /> {CAT_LABEL[card.cat]}</span>
         <span className="ctitle">{card.title}</span>
         <span className="cone" dangerouslySetInnerHTML={{ __html: card.one }} />
         <span className="done-mark" aria-hidden="true">✓</span>
@@ -26,7 +28,7 @@ export function ExerciseView({ ex, done }: { ex: Exercise; done: boolean }) {
   return (
     <details className={`card cat-exercise${done ? ' done' : ''}`} id={ex.id}>
       <summary>
-        <span className="badge b-exercise">{ex.src} · {ex.q}</span>
+        <span className="badge b-exercise"><IconExercise size={14} /> {ex.src} · {ex.q}</span>
         <span className="ctitle">{ex.title}</span>
         <span className="cone">נושא: {ex.topics}</span>
         <span className="done-mark" aria-hidden="true">✓</span>
@@ -47,7 +49,7 @@ export function LockedView({ id, badge, badgeClass, title, one }: { id: string; 
     <div className="locked" id={id}>
       <span className={`badge ${badgeClass}`}>{badge}</span>
       <span className="ctitle">{title}</span>
-      <span className="lock" aria-label="נעול">🔒 בגישה המלאה</span>
+      <span className="lock"><IconLock size={15} /> בגישה המלאה</span>
       {one ? <span className="cone" dangerouslySetInnerHTML={{ __html: one }} /> : null}
     </div>
   );

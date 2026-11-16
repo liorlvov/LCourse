@@ -1,8 +1,7 @@
+import Link from 'next/link';
+import { PRICE_ILS } from '@/lib/legal';
+
+/** Goes to the checkout page, where the deal is laid out and the terms are accepted before paying. */
 export default function BuyButton({ label, className = 'btn accent' }: { label?: string; className?: string }) {
-  const price = process.env.COURSE_PRICE_ILS ?? '69';
-  return (
-    <form action="/api/checkout" method="post" style={{ display: 'inline' }}>
-      <button type="submit" className={className}>{label ?? `גישה מלאה ב־${price} ₪`}</button>
-    </form>
-  );
+  return <Link className={className} href="/checkout">{label ?? `גישה מלאה ב־${PRICE_ILS} ₪`}</Link>;
 }

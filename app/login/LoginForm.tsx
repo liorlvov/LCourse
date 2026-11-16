@@ -26,7 +26,7 @@ export default function LoginForm({ next }: { next: string }) {
     <form onSubmit={submit}>
       <label htmlFor="email">כתובת מייל</label>
       <input id="email" type="email" required autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@example.com" />
-      <button className="btn" type="submit" disabled={state === 'sending'}>{state === 'sending' ? 'שולח…' : 'שלחו לי קישור כניסה'}</button>
+      <button className="btn accent" type="submit" disabled={state === 'sending'}>{state === 'sending' ? 'שולח…' : 'שלחו לי קישור כניסה'}</button>
       {state === 'error' ? <p className="msg banner warn">לא הצלחנו לשלוח: {err}</p> : null}
     </form>
   );

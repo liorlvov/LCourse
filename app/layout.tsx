@@ -1,25 +1,39 @@
 import type { Metadata, Viewport } from 'next';
 import 'katex/dist/katex.min.css';
+// Fonts are self-hosted (no requests to Google): Karantina for display, IBM Plex Sans Hebrew for text, Plex Mono for readouts.
+import '@fontsource/karantina/700.css';
+import '@fontsource/ibm-plex-sans-hebrew/400.css';
+import '@fontsource/ibm-plex-sans-hebrew/500.css';
+import '@fontsource/ibm-plex-sans-hebrew/700.css';
+import '@fontsource/ibm-plex-mono/500.css';
 import './globals.css';
 
+const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+
 export const metadata: Metadata = {
-  title: 'פיזיקה 3: סביבת למידה',
-  description: 'תנודות וגלים בלי לפחד: כל נושא מתחיל במה הבעיה ולמה זה מעניין, ממשיך באינטואיציה, ורק אז הוכחה צעד אחר צעד.',
+  metadataBase: new URL(SITE),
+  title: 'פיזיקה 3 · תנודות וגלים, בלי שהחומר יפחיד',
+  description: 'סביבת למידה לפיזיקה 3: כל נושא מתחיל במה הבעיה ולמה זה מעניין, ממשיך באינטואיציה, ורק אז הוכחה צעד אחר צעד. שיעורים 1–4 בחינם.',
+  openGraph: {
+    title: 'פיזיקה 3 · תנודות וגלים, בלי שהחומר יפחיד',
+    description: 'הסברים, הוכחות צעד אחר צעד ותרגילים פתורים. שיעורים 1–4 בחינם.',
+    locale: 'he_IL',
+    type: 'website',
+  },
 };
 
-export const viewport: Viewport = { width: 'device-width', initialScale: 1 };
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f3eee4' },
+    { media: '(prefers-color-scheme: dark)', color: '#121418' },
+  ],
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="he" dir="rtl">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
       <body>{children}</body>
     </html>
   );

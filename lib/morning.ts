@@ -74,7 +74,7 @@ export async function createPaymentForm(opts: {
     maxPayments: 1,
     client: { name: name || email, emails: [email], add: true },
     successUrl: `${siteUrl}/thanks?pid=${purchaseId}`,
-    failureUrl: `${siteUrl}/course/map?payment=failed`,
+    failureUrl: `${siteUrl}/checkout?payment=failed`,
     notifyUrl: `${siteUrl}/api/morning/notify?token=${encodeURIComponent(secret)}&pid=${purchaseId}`,
     custom: purchaseId,
   };

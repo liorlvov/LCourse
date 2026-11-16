@@ -5,6 +5,7 @@ import {
 } from '@/lib/content';
 import { getViewer, type Viewer } from '@/lib/access';
 import { CardView, ExerciseView, LockedView, LockCta } from '@/components/Items';
+import { IconLock } from '@/components/Icons';
 
 export const dynamic = 'force-dynamic';
 
@@ -89,7 +90,7 @@ function MapTab({ viewer, payment }: { viewer: Viewer; payment?: string }) {
                         {cards.map((c) => (
                           <li key={c.id}>
                             <Link className={`maplink${viewer.done.has(c.id) ? ' done' : ''}`} href={hrefOf(c.id)}>
-                              {c.title}{!c.free && !viewer.hasAccess ? ' 🔒' : ''}
+                              {c.title}{!c.free && !viewer.hasAccess ? <IconLock size={13} className="maplock" /> : null}
                             </Link>
                           </li>
                         ))}
@@ -103,7 +104,7 @@ function MapTab({ viewer, payment }: { viewer: Viewer; payment?: string }) {
                   <span className="chcol-h b-exercise-t">תרגילים בנושא</span>
                   {exs.map((e) => (
                     <Link key={e.id} className={`maplink exlink${viewer.done.has(e.id) ? ' done' : ''}`} href={hrefOf(e.id)}>
-                      {e.src} · {e.q}{!e.free && !viewer.hasAccess ? ' 🔒' : ''}
+                      {e.src} · {e.q}{!e.free && !viewer.hasAccess ? <IconLock size={13} className="maplock" /> : null}
                     </Link>
                   ))}
                 </div>
