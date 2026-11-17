@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
   const documentId = String(payload.documentId ?? payload.document_id ?? payload.id ?? '');
 
   const admin = createAdminClient();
-  const { data: purchase } = await admin.from('purchases').select('id, user_id, amount, status').eq('id', pid).maybeSingle();
+  const { data: purchase } = await admin.from('purchases').select('*').eq('id', pid).maybeSingle();
   if (!purchase) return NextResponse.json({ ok: false, reason: 'unknown purchase' }, { status: 404 });
   if (purchase.status === 'paid') return NextResponse.json({ ok: true, duplicate: true });
 
@@ -44,6 +44,14 @@ export async function POST(req: NextRequest) {
 
   const now = new Date().toISOString();
   await admin.from('purchases').update({ status: 'paid', paid_at: now, morning_document_id: documentId }).eq('id', pid);
-  await admin.from('profiles').update({ has_access: true, access_granted_at: now }).eq('id', purchase.user_id);
+  const courseKey: string = purchase.course_key ?? 'bgu-physics-3';
+  const { error: accessError } = await admin
+    .from('course_access')
+    .upsert({ user_id: purchase.user_id, course_key: courseKey, granted_at: now });
+  if (accessError) console.error('notify: course_access upsert failed (run migration 0003?)', accessError.message);
+  if (courseKey === 'bgu-physics-3') {
+    // legacy flag, read as access to Physics 3 when the course_access table is missing
+    await admin.from('profiles').update({ has_access: true, access_granted_at: now }).eq('id', purchase.user_id);
+  }
   return NextResponse.json({ ok: true });
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { SELLER, TERMS_UPDATED } from '@/lib/legal';
 
-export const metadata: Metadata = { title: 'הצהרת נגישות · פיזיקה 3' };
+export const metadata: Metadata = { title: 'הצהרת נגישות' };
 
 export default function Accessibility() {
   return (
@@ -31,7 +31,7 @@ export default function Accessibility() {
 
       <h2>פנייה בנושא נגישות</h2>
       <p>
-        אחראי הנגישות: {SELLER.name}. מייל: <a href={`mailto:${SELLER.email}`} dir="ltr">{SELLER.email}</a>,
+        פניות בנושא נגישות: צוות {SELLER.brand}. מייל: <a href={`mailto:${SELLER.email}`} dir="ltr">{SELLER.email}</a>,
         טלפון: <a href={`tel:${SELLER.phone.replace(/-/g, '')}`} dir="ltr">{SELLER.phone}</a>. כדאי לציין באיזה עמוד הייתה הבעיה ובאיזה מכשיר או תוכנה השתמשת.
       </p>
     </article>

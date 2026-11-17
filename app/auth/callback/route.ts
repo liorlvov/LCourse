@@ -3,8 +3,8 @@ import { createClient } from '@/lib/supabase/server';
 
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get('code');
-  const nextParam = req.nextUrl.searchParams.get('next') ?? '/course/map';
-  const next = nextParam.startsWith('/') && !nextParam.startsWith('//') ? nextParam : '/course/map';
+  const nextParam = req.nextUrl.searchParams.get('next') ?? '/';
+  const next = nextParam.startsWith('/') && !nextParam.startsWith('//') ? nextParam : '/';
   if (code) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { SELLER } from '@/lib/legal';
+import { PLATFORM } from '@/lib/courses';
 
 export default function SiteFooter() {
   return (
@@ -11,11 +12,9 @@ export default function SiteFooter() {
         <Link href="/accessibility">הצהרת נגישות</Link>
       </nav>
       <p>
-        {SELLER.name} ({SELLER.trade}) · {SELLER.status} {SELLER.id} · {SELLER.address} ·{' '}
-        <a href={`tel:${SELLER.phone.replace(/-/g, '')}`} dir="ltr">{SELLER.phone}</a> ·{' '}
-        <a href={`mailto:${SELLER.email}`} dir="ltr">{SELLER.email}</a>
+        {PLATFORM.name} מופעל על ידי {SELLER.brand} · <a href={`mailto:${SELLER.email}`} dir="ltr">{SELLER.email}</a>
       </p>
-      <p>פרויקט עצמאי, ללא קשר רשמי לאוניברסיטת בן־גוריון בנגב.</p>
+      <p>פרויקט עצמאי. אין לו קשר רשמי לאוניברסיטאות שהקורסים שלהן מופיעים באתר.</p>
     </footer>
   );
 }

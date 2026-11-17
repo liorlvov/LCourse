@@ -60,21 +60,21 @@ async function call(path: string, init: RequestInit = {}) {
 }
 
 export async function createPaymentForm(opts: {
-  purchaseId: string; email: string; name: string; amount: number; siteUrl: string;
+  purchaseId: string; email: string; name: string; amount: number; siteUrl: string; description: string; courseKey: string;
 }): Promise<string> {
-  const { purchaseId, email, name, amount, siteUrl } = opts;
+  const { purchaseId, email, name, amount, siteUrl, description, courseKey } = opts;
   const secret = process.env.MORNING_WEBHOOK_SECRET!;
   const body: Record<string, unknown> = {
-    description: 'פיזיקה 3: גישה מלאה לסביבת הלמידה',
-    type: Number(process.env.MORNING_DOC_TYPE ?? 320), // 320 = tax invoice-receipt; 400 = receipt (עוסק פטור)
+    description,
+    type: Number(process.env.MORNING_DOC_TYPE ?? 400), // 400 = receipt (עוסק פטור); 320 = tax invoice-receipt
     lang: 'he',
     currency: 'ILS',
-    vatType: Number(process.env.MORNING_VAT_TYPE ?? 1),
+    vatType: Number(process.env.MORNING_VAT_TYPE ?? 0),
     amount,
     maxPayments: 1,
     client: { name: name || email, emails: [email], add: true },
     successUrl: `${siteUrl}/thanks?pid=${purchaseId}`,
-    failureUrl: `${siteUrl}/checkout?payment=failed`,
+    failureUrl: `${siteUrl}/checkout?course=${courseKey}&payment=failed`,
     notifyUrl: `${siteUrl}/api/morning/notify?token=${encodeURIComponent(secret)}&pid=${purchaseId}`,
     custom: purchaseId,
   };

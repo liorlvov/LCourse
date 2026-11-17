@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser();
 
   const path = request.nextUrl.pathname;
-  if (!user && (path.startsWith('/course') || path.startsWith('/thanks') || path.startsWith('/checkout'))) {
+  if (!user && needsLogin(path)) {
     const url = request.nextUrl.clone();
     url.pathname = '/login';
     url.search = `?next=${encodeURIComponent(path + request.nextUrl.search)}`;
@@ -32,6 +32,14 @@ export async function middleware(request: NextRequest) {
   return response;
 }
 
+// Course tabs (/bgu/physics-3/map ...), checkout, thanks and admin need a signed-in user.
+// Course landing pages (/bgu/physics-3) and the catalog stay public.
+const UNI = /^\/(bgu|tau)\/[a-z0-9-]+\/[a-z]+/;
+function needsLogin(path: string) {
+  return UNI.test(path) || path.startsWith('/thanks') || path.startsWith('/checkout') || path.startsWith('/admin');
+}
+
 export const config = {
-  matcher: ['/course/:path*', '/thanks', '/checkout', '/login', '/auth/:path*', '/api/checkout', '/api/progress'],
+  // every page (to keep the session fresh), but not static files or the Morning webhook
+  matcher: ['/((?!_next/static|_next/image|api/morning|favicon.ico|icon.svg|apple-icon.png|logo.svg|logo-email.png|.*\\.(?:png|jpg|svg|webp|woff2?)$).*)'],
 };

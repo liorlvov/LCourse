@@ -2,6 +2,7 @@ import { CAT_LABEL, type Card, type Exercise } from '@/lib/content';
 import MarkButton from './MarkButton';
 import BuyButton from './BuyButton';
 import { CAT_ICON, IconExercise, IconLock } from './Icons';
+import type { Course } from '@/lib/courses';
 
 export function CardView({ card, done }: { card: Card; done: boolean }) {
   const Icon = CAT_ICON[card.cat as keyof typeof CAT_ICON] ?? IconExercise;
@@ -9,7 +10,7 @@ export function CardView({ card, done }: { card: Card; done: boolean }) {
     <details className={`card cat-${card.cat}${done ? ' done' : ''}`} id={card.id}>
       <summary>
         <span className={`badge b-${card.cat}`}><Icon size={14} /> {CAT_LABEL[card.cat]}</span>
-        <span className="ctitle">{card.title}</span>
+        <span className="ctitle">{card.title}{card.source === 'last' ? <span className="src-tag" title="נכתב לפי ההרצאות של שנה שעברה. יתעדכן כשההרצאה של השנה תעלה.">לפי שנה שעברה</span> : null}</span>
         <span className="cone" dangerouslySetInnerHTML={{ __html: card.one }} />
         <span className="done-mark" aria-hidden="true">✓</span>
       </summary>
@@ -55,11 +56,12 @@ export function LockedView({ id, badge, badgeClass, title, one }: { id: string; 
   );
 }
 
-export function LockCta({ text }: { text: string }) {
+export function LockCta({ text, course, title }: { text: string; course: Course; title?: string }) {
   return (
     <div className="lockcta">
+      {title ? <h3>{title}</h3> : null}
       <p>{text}</p>
-      <BuyButton />
+      <BuyButton course={course} />
     </div>
   );
 }

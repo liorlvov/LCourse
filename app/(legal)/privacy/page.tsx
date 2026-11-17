@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { SELLER, TERMS_UPDATED } from '@/lib/legal';
 
-export const metadata: Metadata = { title: 'מדיניות פרטיות · פיזיקה 3' };
+export const metadata: Metadata = { title: 'מדיניות פרטיות' };
 
 export default function Privacy() {
   return (
@@ -17,7 +17,7 @@ export default function Privacy() {
 
       <h2>מי אחראי על המידע</h2>
       <p>
-        {SELLER.name} ({SELLER.trade}), {SELLER.status} {SELLER.id}, {SELLER.address}.
+        {SELLER.brand}, מפעילת האתר. פרטי העוסק המלאים מופיעים בסעיף 1 של <a href="/terms">תנאי השימוש</a>.
         לכל שאלה או בקשה בנושא פרטיות: <a href={`mailto:${SELLER.email}`} dir="ltr">{SELLER.email}</a>.
       </p>
 
@@ -25,7 +25,8 @@ export default function Privacy() {
       <table className="ltable">
         <thead><tr><th>מידע</th><th>למה</th></tr></thead>
         <tbody>
-          <tr><td>כתובת מייל</td><td>יצירת החשבון, שליחת קישורי כניסה, קבלות והודעות על השירות (למשל תקלה או עדכון לתוכן שקנית).</td></tr>
+          <tr><td>כתובת מייל (ושם, אם נכנסת עם Google)</td><td>יצירת החשבון, שליחת קישורי כניסה, קבלות והודעות על השירות (למשל עדכון לחומר של קורס שקנית).</td></tr>
+          <tr><td>מייל שהשארת ברשימת &quot;עדכנו אותי&quot; של קורס שעוד לא נפתח</td><td>הודעה אחת כשהקורס נפתח. אפשר לבקש הסרה בכל רגע.</td></tr>
           <tr><td>פרטי רכישה: סכום, תאריך, סטטוס ומספר מסמך ב־Morning</td><td>פתיחת הגישה, הנהלת חשבונות, וטיפול בביטולים ובהחזרים.</td></tr>
           <tr><td>שם ופרטי תשלום שמוזנים בדף התשלום</td><td>נמסרים ישירות ל־Morning ולחברת הסליקה לצורך החיוב והפקת הקבלה. פרטי הכרטיס לא נשמרים אצלנו.</td></tr>
           <tr><td>התקדמות בקורס (אילו פריטים סימנת)</td><td>כדי שתראה את ההתקדמות שלך בכל מכשיר.</td></tr>
@@ -47,7 +48,8 @@ export default function Privacy() {
         <li><b>Supabase:</b> מסד הנתונים והתחברות (מייל, רכישות, התקדמות).</li>
         <li><b>Vercel:</b> אחסון האתר והשרתים שמריצים אותו.</li>
         <li><b>Morning (חשבונית ירוקה) וחברת הסליקה שלה:</b> התשלום והפקת הקבלה.</li>
-        <li><b>ספק דואר אלקטרוני:</b> שליחת מיילי הכניסה.</li>
+        <li><b>Resend:</b> שליחת מיילי הכניסה והודעות השירות.</li>
+        <li><b>Google:</b> רק אם בחרת להיכנס עם חשבון Google.</li>
         <li>רשויות, אם החוק מחייב אותנו למסור להן מידע.</li>
       </ul>
       <p>

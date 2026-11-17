@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import { SELLER, PRICE_ILS, REFUND_DAYS, TERMS_UPDATED } from '@/lib/legal';
+import { SELLER, REFUND_DAYS, TERMS_UPDATED } from '@/lib/legal';
 
-export const metadata: Metadata = { title: 'ביטול עסקה והחזר כספי · פיזיקה 3' };
+export const metadata: Metadata = { title: 'ביטול עסקה והחזר כספי' };
 
 export default function Refunds() {
   return (
@@ -11,7 +11,7 @@ export default function Refunds() {
       <p className="muted">עודכן לאחרונה: {TERMS_UPDATED}.</p>
 
       <div className="callout">
-        <b>בקצרה:</b> קנית ולא התאים לך? בתוך {REFUND_DAYS} יום מהרכישה מקבלים את כל {PRICE_ILS} השקלים בחזרה, בלי לנמק ובלי דמי ביטול.
+        <b>בקצרה:</b> קנית קורס ולא התאים לך? בתוך {REFUND_DAYS} יום מהרכישה מקבלים את כל הכסף בחזרה, בלי לנמק ובלי דמי ביטול.
       </div>
 
       <h2>ביטול בתוך {REFUND_DAYS} יום, מכל סיבה</h2>
@@ -30,11 +30,10 @@ export default function Refunds() {
       <h2>איך מבטלים</h2>
       <p>שולחים הודעה באחת הדרכים האלה:</p>
       <ul>
-        <li>מייל: <a href={`mailto:${SELLER.email}?subject=${encodeURIComponent('ביטול רכישה - פיזיקה 3')}`} dir="ltr">{SELLER.email}</a></li>
+        <li>מייל: <a href={`mailto:${SELLER.email}?subject=${encodeURIComponent('ביטול רכישה')}`} dir="ltr">{SELLER.email}</a></li>
         <li>טלפון או וואטסאפ: <a href={`tel:${SELLER.phone.replace(/-/g, '')}`} dir="ltr">{SELLER.phone}</a></li>
-        <li>דואר: {SELLER.name}, {SELLER.address}</li>
       </ul>
-      <p>בהודעה כותבים: שם מלא, כתובת המייל של החשבון באתר, ותאריך הרכישה (או מספר הקבלה).</p>
+      <p>בהודעה כותבים: שם מלא, כתובת המייל של החשבון באתר, איזה קורס, ותאריך הרכישה (או מספר הקבלה).</p>
 
       <h2>מתי הכסף חוזר</h2>
       <p>
@@ -42,8 +41,6 @@ export default function Refunds() {
         מועד הזיכוי בפועל תלוי בחברת האשראי.
       </p>
 
-      <h2>מי מוכר</h2>
-      <p>{SELLER.name} ({SELLER.trade}), {SELLER.status} {SELLER.id}, {SELLER.address}.</p>
     </article>
   );
 }

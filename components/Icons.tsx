@@ -58,6 +58,20 @@ export const IconLock = ({ size = 16, className }: P) => (
   </svg>
 );
 
+/** Updates: a bell that rings (two arcs = vibration). */
+export const IconBell = ({ size = 20, className }: P) => (
+  <svg {...base(size)} className={className}>
+    <path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z" /><path d="M10 20.5a2 2 0 0 0 4 0" /><path d="M2.5 9.5c.3-2 1.2-3.6 2.6-4.8M21.5 9.5c-.3-2-1.2-3.6-2.6-4.8" strokeWidth="1.4" />
+  </svg>
+);
+
+/** University: a pediment on three columns. */
+export const IconUni = ({ size = 20, className }: P) => (
+  <svg {...base(size)} className={className}>
+    <path d="M3 9.5L12 4l9 5.5z" /><path d="M5.5 10v7.5M10 10v7.5M14 10v7.5M18.5 10v7.5M3.5 20.5h17" />
+  </svg>
+);
+
 export const IconArrow = ({ size = 18, className }: P) => (
   <svg {...base(size)} className={className}><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
 );
