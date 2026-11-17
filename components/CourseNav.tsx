@@ -6,7 +6,7 @@ import { IconMap, IconConcept, IconTheorem, IconTool, IconExercise, IconCheat, I
 const TABS = [
   { slug: 'map', label: 'מפה', Icon: IconMap },
   { slug: 'concepts', label: 'קונספטים', Icon: IconConcept },
-  { slug: 'theorems', label: 'משפטים', Icon: IconTheorem },
+  { slug: 'theorems', label: 'משפטים והגדרות', Icon: IconTheorem },
   { slug: 'tools', label: 'כלים', Icon: IconTool },
   { slug: 'exercises', label: 'תרגילים', Icon: IconExercise },
   { slug: 'cheat', label: 'מה לזכור', Icon: IconCheat },

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { CAT_LABEL, CAT_TITLE, TAB_CAT, SUBS, getContent, seenId, type Cat, type CourseContent } from '@/lib/content';
+import { CAT_LABEL, CAT_TITLE, TAB_CATS, SUBS, getContent, seenId, type Cat, type CourseContent } from '@/lib/content';
 import { getViewer, hasCourse, type Viewer } from '@/lib/access';
 import { getCourse, type Course } from '@/lib/courses';
 import { CardView, ExerciseView, LockedView, LockCta } from '@/components/Items';
@@ -11,10 +11,10 @@ type Ctx = { k: CourseContent; course: Course; viewer: Viewer; paid: boolean };
 
 export const dynamic = 'force-dynamic';
 
-const TAB_INTRO: Record<Cat, string> = {
-  concept: 'מה התופעה, למה היא מעניינת, ואיך לחשוב עליה. כל כרטיס סגור, ופותחים רק את מה שצריך.',
-  theorem: 'כל משפט: הניסוח, למה הוא חשוב, האינטואיציה, ואז הוכחה שבה כל צעד אומר מה עושים ולמה.',
-  tool: 'מתכונים לפתרון תרגילים: איך מזהים שצריך את הכלי, הצעדים, דוגמה פתורה ומלכודות.',
+const TAB_INFO: Record<string, { title: string; intro: string }> = {
+  concepts: { title: 'קונספטים', intro: 'מה התופעה, למה היא מעניינת, ואיך לחשוב עליה. כל כרטיס סגור, ופותחים רק את מה שצריך.' },
+  theorems: { title: 'משפטים והגדרות', intro: 'בכל פרק קודם ההגדרות, המילים המדויקות שבהן הכל כתוב, ואז המשפטים: הניסוח, למה הוא חשוב, האינטואיציה, והוכחה שבה כל צעד אומר מה עושים ולמה.' },
+  tools: { title: 'כלים ודרכי פתרון', intro: 'מתכונים לפתרון תרגילים: איך מזהים שצריך את הכלי, הצעדים, דוגמה פתורה ומלכודות.' },
 };
 
 export default async function TabPage({
@@ -32,7 +32,7 @@ export default async function TabPage({
   const ctx: Ctx = { k, course, viewer, paid: hasCourse(viewer, course.key) };
 
   if (tab === 'map') return <MapTab ctx={ctx} payment={sp.payment} />;
-  if (tab in TAB_CAT) return <CardsTab ctx={ctx} cat={TAB_CAT[tab]} />;
+  if (tab in TAB_CATS) return <CardsTab ctx={ctx} tab={tab} />;
   if (tab === 'exercises') return <ExercisesTab ctx={ctx} sub={sp.sub ?? 'tut'} />;
   if (tab === 'cheat') return <CheatTab ctx={ctx} />;
   if (tab === 'updates') return <UpdatesTab ctx={ctx} />;
@@ -110,7 +110,7 @@ function MapTab({ ctx: { k, course, viewer, paid }, payment }: { ctx: Ctx; payme
         <h2>איך משתמשים</h2>
         <div className="howgrid">
           <div className="how"><span className="badge b-concept">קונספט</span><p>מה התופעה ואיך לחשוב עליה. מתחילים כאן כשנושא חדש.</p></div>
-          <div className="how"><span className="badge b-theorem">משפט</span><p>טענה מדויקת והוכחה, כשכל צעד מסביר מה עושים ולמה.</p></div>
+          <div className="how"><span className="badge b-definition">הגדרה</span> <span className="badge b-theorem">משפט</span><p>הגדרות: המילים המדויקות. משפטים: טענה מדויקת והוכחה, כשכל צעד מסביר מה עושים ולמה.</p></div>
           <div className="how"><span className="badge b-tool">כלי</span><p>מתכון לפתרון תרגילים: איך מזהים, הצעדים, דוגמה ומלכודות.</p></div>
         </div>
         <p className="anatomy">בתוך כל כרטיס: <b>הכותרת</b> ← <span className="tog">למה בכלל?</span> (מקופל) ← <b>האינטואיציה</b> ← <span className="tog">ההוכחה</span> (מקופל, צעד אחר צעד) ← <b className="hl">מה לזכור לתרגילים</b>.</p>
@@ -127,7 +127,8 @@ function MapTab({ ctx: { k, course, viewer, paid }, payment }: { ctx: Ctx; payme
               </div>
               <div className="chcols">
                 {(['concept', 'theorem', 'tool'] as Cat[]).map((cat) => {
-                  const cards = k.cards.filter((c) => c.cat === cat && c.ch === ch.id);
+                  const kinds: Cat[] = cat === 'theorem' ? ['definition', 'theorem'] : [cat];
+                  const cards = kinds.flatMap((kind) => k.cards.filter((c) => c.cat === kind && c.ch === ch.id));
                   if (!cards.length) return null;
                   return (
                     <div className="chcol" key={cat}>
@@ -164,17 +165,18 @@ function MapTab({ ctx: { k, course, viewer, paid }, payment }: { ctx: Ctx; payme
   );
 }
 
-function CardsTab({ ctx: { k, course, viewer, paid }, cat }: { ctx: Ctx; cat: Cat }) {
+function CardsTab({ ctx: { k, course, viewer, paid }, tab }: { ctx: Ctx; tab: string }) {
+  const cats = TAB_CATS[tab];
   // Free users see the free part first, then where it ends, then what the full course adds.
   const group = (pick: (free: boolean) => boolean) =>
     k.chapters
-      .map((ch) => ({ ch, cards: k.cards.filter((c) => c.cat === cat && c.ch === ch.id && pick(c.free)) }))
+      .map((ch) => ({ ch, cards: cats.flatMap((cat) => k.cards.filter((c) => c.cat === cat && c.ch === ch.id && pick(c.free))) }))
       .filter((g) => g.cards.length);
   const open = group((free) => paid || free);
   const locked = paid ? [] : group((free) => !free);
   return (
     <>
-      <header className="tabhead"><h2>{CAT_TITLE[cat]}</h2><p>{TAB_INTRO[cat]}</p></header>
+      <header className="tabhead"><h2>{TAB_INFO[tab].title}</h2><p>{TAB_INFO[tab].intro}</p></header>
       {open.map(({ ch, cards }) => (
         <div className="chgroup" key={ch.id}>
           <h3 className="chhead"><span className="chletter">{ch.letter}</span>{ch.title}</h3>

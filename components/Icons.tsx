@@ -29,6 +29,13 @@ export const IconTheorem = ({ size = 20, className }: P) => (
   </svg>
 );
 
+/** Definition: the "defined as" sign, :=, on an index card. */
+export const IconDefinition = ({ size = 20, className }: P) => (
+  <svg {...base(size)} className={className}>
+    <rect x="3.5" y="5" width="17" height="14" /><circle cx="8.3" cy="10" r=".9" fill="currentColor" stroke="none" /><circle cx="8.3" cy="14" r=".9" fill="currentColor" stroke="none" /><path d="M11.5 10.5h5M11.5 13.5h5" />
+  </svg>
+);
+
 /** Tool: a tuning fork. */
 export const IconTool = ({ size = 20, className }: P) => (
   <svg {...base(size)} className={className}>
@@ -80,4 +87,4 @@ export const IconCheck = ({ size = 18, className }: P) => (
   <svg {...base(size)} className={className}><path d="M4.5 12.5l4.5 4.5L19.5 6.5" /></svg>
 );
 
-export const CAT_ICON = { concept: IconConcept, theorem: IconTheorem, tool: IconTool, exercise: IconExercise } as const;
+export const CAT_ICON = { concept: IconConcept, definition: IconDefinition, theorem: IconTheorem, tool: IconTool, exercise: IconExercise } as const;

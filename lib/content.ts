@@ -2,7 +2,7 @@ import 'server-only';
 import physics3 from '@/content/rendered.json';
 import physics3Updates from '@/content/updates/bgu-physics-3.json';
 
-export type Cat = 'concept' | 'theorem' | 'tool';
+export type Cat = 'concept' | 'definition' | 'theorem' | 'tool';
 export type Chapter = { id: string; letter: string; title: string; story: string; where: string };
 export type Card = {
   id: string; cat: Cat; ch: string; title: string; one: string; lessons: number[];
@@ -27,9 +27,11 @@ export type CourseContent = {
   hrefFor: (id: string) => string;
 };
 
-export const CAT_LABEL: Record<Cat, string> = { concept: 'קונספט', theorem: 'משפט', tool: 'כלי' };
-export const CAT_TITLE: Record<Cat, string> = { concept: 'קונספטים', theorem: 'משפטים והוכחות', tool: 'כלים ודרכי פתרון' };
-export const TAB_CAT: Record<string, Cat> = { concepts: 'concept', theorems: 'theorem', tools: 'tool' };
+export const CAT_LABEL: Record<Cat, string> = { concept: 'קונספט', definition: 'הגדרה', theorem: 'משפט', tool: 'כלי' };
+export const CAT_TITLE: Record<Cat, string> = { concept: 'קונספטים', definition: 'הגדרות', theorem: 'משפטים והגדרות', tool: 'כלים ודרכי פתרון' };
+/** Which card types each tab shows, in order. Definitions come before theorems in every chapter. */
+export const TAB_CATS: Record<string, Cat[]> = { concepts: ['concept'], theorems: ['definition', 'theorem'], tools: ['tool'] };
+export const TAB_OF_CAT: Record<Cat, string> = { concept: 'concepts', definition: 'theorems', theorem: 'theorems', tool: 'tools' };
 
 export const SUBS = [
   { slug: 'tut', label: 'תרגולים' },
@@ -60,7 +62,7 @@ function build(raw: Raw, base: string, updates: CourseUpdate[]): CourseContent {
     },
     hrefFor(id: string) {
       const c = cards.find((x) => x.id === id);
-      if (c) return `${base}/${c.cat}s#${id}`;
+      if (c) return `${base}/${TAB_OF_CAT[c.cat]}#${id}`;
       const e = exercises.find((x) => x.id === id);
       return e ? `${base}/exercises?sub=${e.group}#${id}` : `${base}/map`;
     },

@@ -801,3 +801,17 @@ body { background-image: var(--grain); background-size: 160px 160px; }
 .tabs a { font-size: 14.5px; }
 .locked-h { font-family: var(--font-display); font-size: 30px; margin: 34px 0 12px; color: var(--muted); }
 .chhead.small { font-size: 22px; color: var(--muted); }
+
+/* definitions: graphite, the neutral vocabulary of the course */
+:root { --definition: #45505e; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --definition: #aab6c6; } }
+.card.cat-definition { --c: var(--definition); }
+.b-definition { --c: var(--definition); }
+.b-definition-t { color: var(--definition); }
+.cat-definition .statement { border-inline-start-color: var(--definition); background: color-mix(in srgb, var(--definition) 6%, transparent); }
+.cat-definition .st-label { color: var(--definition); }
+@media (max-width: 1440px) {
+  .tabs { gap: 0; }
+  .tabs a { padding-inline: 7px; gap: 5px; }
+  .topbar:not(.home) .brand-sub { display: none; }
+}

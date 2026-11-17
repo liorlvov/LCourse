@@ -79,7 +79,7 @@ export default function CourseLanding({ course, k, viewer }: { course: Course; k
         </section>
 
         <section className="readouts reveal" aria-label="מה יש בפנים">
-          <div><b>{STATS.cards}</b><span>כרטיסי לימוד: קונספטים, משפטים וכלים</span></div>
+          <div><b>{STATS.cards}</b><span>כרטיסי לימוד: קונספטים, הגדרות, משפטים וכלים</span></div>
           <div><b>{STATS.exercises}</b><span>שאלות מתרגולים ושיעורי בית, עם פתרון מלא</span></div>
           <div><b>{CHAPTERS.length}</b><span>פרקים, מאוסילטור בודד ועד כוח מאלץ</span></div>
         </section>
@@ -116,7 +116,7 @@ export default function CourseLanding({ course, k, viewer }: { course: Course; k
           <h2>כל סוג ידע בלשונית משלו</h2>
           <div className="channels">
             <div className="channel ch-concept"><span className="ch-tag">CH1</span><IconConcept size={30} /><h3>קונספטים</h3><p>מה התופעה ואיך לחשוב עליה.</p></div>
-            <div className="channel ch-theorem"><span className="ch-tag">CH2</span><IconTheorem size={30} /><h3>משפטים והוכחות</h3><p>טענה מדויקת והוכחה מלאה, צעד אחר צעד.</p></div>
+            <div className="channel ch-theorem"><span className="ch-tag">CH2</span><IconTheorem size={30} /><h3>משפטים והגדרות</h3><p>ההגדרות המדויקות, ומשפטים עם הוכחה מלאה, צעד אחר צעד.</p></div>
             <div className="channel ch-tool"><span className="ch-tag">CH3</span><IconTool size={30} /><h3>כלים ודרכי פתרון</h3><p>מתכון: איך מזהים, הצעדים, דוגמה ומלכודות.</p></div>
           </div>
         </section>
