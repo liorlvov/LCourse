@@ -36,7 +36,7 @@ export default async function Home() {
           <div className="scope-copy">
             <p className="kicker rise" style={{ '--d': '0ms' } as React.CSSProperties}>{PLATFORM.name} · קורסים לתואר במדעים</p>
             <h1 id="hero-h" className="rise" style={{ '--d': '90ms' } as React.CSSProperties}>
-              <span className="h-big h-mid">החומר של הקורס,</span>
+              <span className="h-big h-mid">החומר של הקורס</span>
               <span className="h-line">בלי שהוא יפחיד.</span>
             </h1>
             <p className="lead rise" style={{ '--d': '180ms' } as React.CSSProperties}>

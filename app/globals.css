@@ -815,3 +815,7 @@ body { background-image: var(--grain); background-size: 160px 160px; }
   .tabs a { padding-inline: 7px; gap: 5px; }
   .topbar:not(.home) .brand-sub { display: none; }
 }
+
+/* round things stay round (the flat pass squared them by mistake) */
+.h-big::after { border-radius: 50%; }
+.anat li::before, .pulse, .pulse::before, .pulse::after { border-radius: 50%; }
